@@ -1,0 +1,430 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+h1 {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: 40px;
+    color: #080808;
+    -webkit-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+
+h1 span {
+    display: block;
+    font-size: 0.5em;
+    line-height: 1.3;
+}
+h1 em {
+    font-style: normal;
+    font-weight: 600;
+}
+
+body {
+    background: #787879;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 20px 15px;
+    border-radius: 18px;
+    box-shadow: 0 15px 10px rgba(0,0,0,0.2);
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 0%;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    gap: 50px;
+}
+
+nav li:hover{
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+
+nav ul a{
+    position: relative;
+    color: #333;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 6px 0;
+    text-decoration: none;
+}
+nav ul a:before{
+    content: '_';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 0%;
+    background: #970e0e;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+}
+nav ul a:hover:before{
+    width: 100%;
+}
+nav ul.center a:before{
+    left: 50%;
+    transform: translateX(-50%);
+}
+nav ul.upward a:before{
+    width: 100%;
+    bottom: -5px;
+    opacity: 0;
+}
+nav ul.upward a:hover:before{
+    bottom: 0px;
+    opacity: 1;
+}
+nav ul.forward a:before{
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease;
+}
+nav ul.forward a:hover:before{
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.subtitulo {
+    position: relative;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    background: #fff;
+    padding: 20px 15px;
+    border-radius: 25px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    box-shadow: 0 15px 10px rgba(0,0,0,0.2);
+}
+
+
+
+.subtitulo2 {
+    position: relative;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    background: #fff;
+    padding: 20px 15px;
+    border-radius: 25px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    box-shadow: 0 15px 10px rgba(0,0,0,0.2);
+}
+
+.subtitulo h1 {
+    text-transform: capitalize;
+}
+.subtitulo h1 span {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    line-height: 3em;
+    padding-left: 0.25em;
+    color: rgba(0, 0, 0, 0.4);
+    padding-bottom: 10px;
+}
+
+.alt-subtitulo h1 {
+    text-align:center;
+}
+
+.alt-subtitulo h1:before {
+    left:50%; margin-left:-30px;
+}
+
+
+table {
+    background: #fff;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-radius: 20px;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+th {
+    background: #520909;
+    color: #fff;
+    font-size: 20px;
+}
+
+th, td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    font-family: 'Raleway', sans-serif;
+    text-align: left;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 20px 15px;
+    border-radius: 18px;
+    box-shadow: 0 15px 10px rgba(0,0,0,0.2);
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 15px;
+}
+
+.ver {
+    padding: 17px 17px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 1;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 10px;
+    transition: all 0.5s ease;
+}
+
+.ver:hover {
+    letter-spacing: 2px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+}
+
+.ver:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(3px);
+    transition: 100ms;
+}
+
+.verbtn {
+    padding: 24px 10px 10px 10px;
+    border-radius: 50px;
+    border: 0px;
+    cursor: pointer;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    font-size: 10px;
+    transition: all 0.5s ease;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+
+.verbtn:hover {
+    background-color: hsl(261deg 80% 48%);
+    color: white;
+}
+
+.verbtn:active {
+    background-color: hsl(261deg 80% 48%);
+}
+
+.verelbtn {
+    padding: 11px 10px 10px 12px;
+    border-radius: 50px;
+    border: 0px;
+    cursor: pointer;
+    background-color: transparent;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    font-size: 10px;
+    transition: all 0.5s ease;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.verelbtn:hover {
+    background-color: hsl(0, 91%, 58%);
+    color: white;
+}
+
+.verelbtn:active {
+    background-color: hsl(0, 91%, 58%);
+}
+
+.eliminar-todos {
+    display: block;
+    margin: 20px auto; /* Centra el botón horizontalmente */
+    padding: 10px 20px;
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.eliminar-todos:hover {
+    background-color: #ff1c2e;
+}
+
+.logout {
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to right, #232526 0%, #414345 51%, #787879 100%);
+    padding: 10px 35px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    margin: 15px auto; /* Centra el botón horizontalmente */
+    cursor: pointer;
+}
+
+.logout:hover {
+    background-position: right center; 
+    color: #fff;
+    text-decoration: none;
+}
+
+.logout a {
+    text-decoration: none;
+    color: white;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contenedor .ver {
+    background-color: #949494;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px; 
+    cursor: pointer;
+    margin-left: 5px; 
+    margin-bottom: 5px;
+}
+
+.contenedor .ver:hover {
+    background-color: #5e4040;
+}
+
+.camposExpandibles {
+    background: #eee;
+    border: 10px solid #ddd;
+    border-radius: 5px;
+}
+
+.botonesArch {
+    gap: 5px; 
+    width: 10%;
+    display:inline;
+    margin-top: 20px;
+}
+
+.botonesfile {
+    display:end;
+    margin-top: 20px;
+    width: 10%;
+}
+
+.nuevoar {
+    background: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 6px auto;
+    width: 33%;
+    padding: 4px;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.2);
+}
+
+.nuevoar input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.subir {
+    background: #ffffff;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.2);
+    padding: 10px;
+    margin: 5% auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.buscar {
+    background: #ffffff;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.2);
+    padding: 10px;
+    margin: 5px auto;
+}
+
+table .findocs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.check {
+    width: 30px;
+    text-align: center;
+}
+
+.check input[type="checkbox"] {
+    transform: scale(1.5);
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+}
