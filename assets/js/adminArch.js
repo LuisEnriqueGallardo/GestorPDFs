@@ -50,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             const tr = document.createElement('tr');
                             tr.id = `row-${row.id}`;
                             tr.innerHTML = `
-                                <td class="check"><input type="checkbox" name="ids[]" value="${row.id}"></td>
+                                <td class="check"><input type="checkbox" name="ids[]" value="<?= $archivo['id'] ?>"></td>
                                 <td class="botonesfile">
                                     <a class="verbtn" href="verArchivo.php?id=${row.id}"><i class="material-icons">import_contacts</i></a>
                                     ${userRole === 1 ? `
-                                    <form method="POST">
+                                    <form method="POST" style="display:inline;">
                                         <input type="hidden" name="id" value="${row.id}">
                                         <button class="verelbtn" type="submit" name="eliminar_individual"><i class="material-icons">delete_sweep</i></button>
                                     </form>` : ''}

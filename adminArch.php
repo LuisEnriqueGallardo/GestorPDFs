@@ -76,6 +76,8 @@ try {
         throw new Exception("Error al obtener los archivos: " . $conn->error);
     }
 
+    // Ordenar los archivos por fecha o nombre
+
     $row = [];
     while ($archivo = $result->fetch_assoc()) {
         $row[] = $archivo;
@@ -104,7 +106,7 @@ try {
     <?php endif; ?>
 </head>
 <body>
-    <?php if ($mensajes): ?>
+    <?php if (isset($mensajes)): ?>
         <script>alert('<?= implode("\\n", $mensajes) ?>');</script>
     <?php endif; ?>
     <?php if ($_SESSION['rol'] === 1): ?>
@@ -149,7 +151,7 @@ try {
             </thead>
             <tbody id="cuerpoTabla">
             <?php foreach ($row as $archivo): ?>
-                    <tr id="row-<?= $archivo['id'] ?>">
+                    <tr id="row-<?= $archivo['id'] ?>" style="display:inline;">
                         <td class="check"><input type="checkbox" name="ids[]" value="<?= $archivo['id'] ?>"></td>
                         <td class="botonesfile">
                             <a class="verbtn" href="verArchivo.php?id=<?= $archivo['id']; ?>"><i class="material-icons">import_contacts</i></a>
