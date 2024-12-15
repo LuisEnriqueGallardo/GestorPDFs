@@ -21,23 +21,27 @@ try {
         if (isset($_FILES['archivo'])) {
             $archivos = $_FILES['archivo'];
             $maxFileSize = 64 * 1024 * 1024;
-
-            for ($i = 0; $i < count($archivos['name']); $i++) {
-                if ($archivos['size'][$i] > $maxFileSize) {
-                    $mensajes[] = 'El archivo ' . $archivos['name'][$i] . ' excede el tamaño máximo permitido de 64 MB.';
-                    continue;
+        
+            if (count($archivos['name']) > 5) {
+                $mensajes[] = 'No puedes subir más de 10 archivos a la vez.';
+            } else {
+                for ($i = 0; $i < count($archivos['name']); $i++) {
+                    if ($archivos['size'][$i] > $maxFileSize) {
+                        $mensajes[] = 'El archivo ' . $archivos['name'][$i] . ' excede el tamaño máximo permitido de 64 MB.';
+                        continue;
+                    }
+                    
+                    $nombre = $archivos['name'][$i];
+                    $contenido = file_get_contents($archivos['tmp_name'][$i]);
+                    $fecha = date('Y-m-d H:i:s', filemtime($archivos['tmp_name'][$i]));
+        
+                    $stmt = $conn->prepare("INSERT INTO archivos (nomArchivo, archivo, fecha) VALUES (?, ?, ?)");
+                    $stmt->bind_param('sbs', $nombre, $null, $fecha);
+                    $stmt->send_long_data(1, $contenido);
+                    $stmt->execute();
+                    $stmt->close();
+                    $mensajes[] = "Archivo $nombre cargado con éxito!";
                 }
-                
-                $nombre = $archivos['name'][$i];
-                $contenido = file_get_contents($archivos['tmp_name'][$i]);
-                $fecha = date('Y-m-d H:i:s', filemtime($archivos['tmp_name'][$i]));
-                
-                $stmt = $conn->prepare("INSERT INTO archivos (nomArchivo, archivo) VALUES (?, ?)");
-                $stmt->bind_param('sb', $nombre, $null);
-                $stmt->send_long_data(1, $contenido);
-                $stmt->execute();
-                $stmt->close();
-                $mensajes[] = "Archivo $nombre cargado con éxito!";
             }
         } elseif (isset($_POST['eliminar'])) {
             if (isset($_POST['ids'])) {
@@ -57,7 +61,6 @@ try {
                 throw new Exception("No se ha especificado un ID de archivo a eliminar.");
             }
             $id = $_POST['id'];
-            echo "<script>alert('<?= $id ?>');</script>";
             $stmt = $conn->prepare("DELETE FROM archivos WHERE id = ?");
             $stmt->bind_param('i', $id);
             $stmt->execute();
@@ -101,10 +104,10 @@ try {
     <?php endif; ?>
 </head>
 <body>
+    <?php if ($mensajes): ?>
+        <script>alert('<?= implode("\\n", $mensajes) ?>');</script>
+    <?php endif; ?>
     <?php if ($_SESSION['rol'] === 1): ?>
-        <?php if ($mensaje): ?>
-            <script>alert('<?= $mensaje ?>');</script>
-        <?php endif; ?>
     <header>
         <nav>
             <ul>
@@ -141,6 +144,7 @@ try {
                     <th></th>
                     <th>Acciones</th>
                     <th>Nombre</th>
+                    <th>Fecha</th>
                 </tr>
             </thead>
             <tbody id="cuerpoTabla">
@@ -157,6 +161,7 @@ try {
                             <?php endif; ?>
                         </td>
                         <td><?= $archivo['nomArchivo'] ?></td>
+                        <td><?= $archivo['fecha'] ?></td>
                     </tr>
                 <?php endforeach; ?>
                 <tr>
@@ -179,7 +184,6 @@ try {
 <script src="assets/js/adminArch.js"></script>
 </html>
 
-TODO Corregir borrado individual de archivos
 TODO Corregir ordenamiento de archivos por fecha y nombre
 TODO Insertar logs de actividad en la base de datos
 TODO Crear página de visualización de logs
