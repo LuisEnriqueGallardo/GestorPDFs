@@ -55,6 +55,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/adminUsuarios.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=logout" rel="stylesheet" />
     <title>Gestionar Usuarios</title>
 </head>
 <body>
@@ -71,7 +72,7 @@ try {
                 <span>Usuarios existentes</span>
             </h1>
         <button class="logout"><a href="adminArch.php">Volver</a></button>
-        <a href="logout.php">Cerrar Sesión</a>
+        <a href="logout.php"><span class="material-symbols-outlined">logout</span></a>
     </div>
     <div class="separador">
         <div class="contenedorreg">

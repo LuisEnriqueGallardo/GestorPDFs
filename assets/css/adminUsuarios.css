@@ -31,7 +31,7 @@ h1 em {
 }
 
 body {
-    background: #787879;
+    background: #f6f5fa;
 }
 
 nav {
@@ -105,8 +105,6 @@ nav ul.forward a:hover:before{
 
 .subtitulo {
     position: relative;
-    margin-top: 5%;
-    margin-bottom: 5%;
     text-align: center;
     background: #fff;
     padding: 20px 15px;
@@ -155,7 +153,7 @@ table {
 }
 
 th {
-    background: #520909;
+    background: #4e38a4;
     color: #fff;
     font-size: 20px;
 }
@@ -217,7 +215,7 @@ table .findocs {
 }
 
 .form .registro {
-    background: rgb(87, 87, 87);
+    background: #ffffff;
     margin: 35px;
     display: flex;
     flex-direction: column;
@@ -236,18 +234,18 @@ table .findocs {
     font-size: 30px;
     font-weight: 50px;
     padding-bottom: 1px;
-    color: rgb(255, 255, 255);
+    color: #000000;
     text-align: center;
 }
 
 .entrada {
     width: 245px;
     min-height: 45px;
-    color: #fff;
+    color: #4e38a4;
     outline: none;
     transition: 0.35s;
     padding: 0px 7px;
-    background-color: #212121;
+    background-color: #cfcfcf;
     border-radius: 6px;
     border: 2px solid #212121;
     box-shadow: 6px 6px 10px rgba(0,0,0,1),
@@ -255,7 +253,7 @@ table .findocs {
 }
 
 .entrada::placeholder {
-    color: #999;
+    color: #070707;
 }
 
 .entrada:focus.input::placeholder {
@@ -391,4 +389,12 @@ table .findocs {
     justify-content: center;
     gap: 0%;
     margin: 0px 343px 0px 262px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }
