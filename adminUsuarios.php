@@ -59,6 +59,15 @@ try {
     <title>Gestionar Usuarios</title>
 </head>
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="adminUsuarios.php" id="admin-link">Usuarios</a></li>
+                <li><a href="adminArch.php">Archivos</a></li>
+                <li><a href="logout.php">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="subtitulo">
         <h1>Usuarios
             <span>Gestióna los usuarios desde este apartado.</span>

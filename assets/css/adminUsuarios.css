@@ -39,11 +39,12 @@ nav {
     align-items: center;
     background: #fff;
     padding: 20px 15px;
-    border-radius: 18px;
-    box-shadow: 0 15px 10px rgba(0,0,0,0.2);
-    margin-left: 20%;
-    margin-right: 20%;
+    border-radius: 0px 0px 30px 30px;
+    box-shadow: 0 5px 17px rgba(0,0,0,0.2);
+    margin-left: 10%;
+    margin-right: 10%;
     margin-top: 0%;
+    border: 1px solid #000000;
 }
 
 nav ul{
