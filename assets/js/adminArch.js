@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     </form>` : ''}
                                 </td>
                                 <td>${row.nomArchivo}</td>
+                                <td>${row.fecha}</td>
+                                <td>${row.tamano} KB</td>
                             `;
                             tableBody.appendChild(tr);
                         });

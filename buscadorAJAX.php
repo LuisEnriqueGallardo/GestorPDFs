@@ -10,7 +10,7 @@ include("basedatos.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['query'])) {
     $query = $conn->real_escape_string($_GET['query']);
-    $sql = "SELECT id, nomArchivo FROM archivos WHERE nomArchivo LIKE '%$query%'";
+    $sql = "SELECT id, nomArchivo, fecha, tamano FROM archivos WHERE nomArchivo LIKE '%$query%'";
     $result = $conn->query($sql);
 
     $archivos = [];
