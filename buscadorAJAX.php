@@ -1,10 +1,12 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', '', 'sistemapdf');
 
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+if (!isset($_SESSION['rol'])) {
+    header('Location: login.php');
+    exit;
 }
+
+include("basedatos.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['query'])) {
     $query = $conn->real_escape_string($_GET['query']);

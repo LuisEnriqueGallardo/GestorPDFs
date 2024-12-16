@@ -1,13 +1,20 @@
 <?php
 session_start();
+include("basedatos.php");
+
+if (!isset($_SESSION['rol'])) {
+    header('Location: login.php');
+    exit;
+}
 
 $mensaje = '';
 
 try {
-    // Conexión a la base de datos
-    $conn = new mysqli('localhost', 'root', '', 'sistemapdf');
-    if ($conn->connect_error) {
-        throw new Exception("Error de conexión: " . $conn->connect_error);
+    function registrar_log($conn, $usuario, $accion, $descripcion) {
+        $stmt = $conn->prepare("INSERT INTO logs (usuario, accion, descripcion) VALUES (?, ?, ?)");
+        $stmt->bind_param('sss', $usuario, $accion, $descripcion);
+        $stmt->execute();
+        $stmt->close();
     }
 
     // Manejo de creación y eliminación de usuarios
@@ -22,19 +29,33 @@ try {
             $stmt->execute();
             $mensaje = "Usuario creado con éxito!";
             $stmt->close();
+
+            // Registrar log de creación de usuario
+            registrar_log($conn, $_SESSION['usuario'], 'Creación de usuario', "Usuario '$usuario' creado.");
+
+            // Redirigir para evitar reenvío de formulario
+            header('Location: adminUsuarios.php');
+            exit;
             
         } elseif (isset($_POST['eliminar'])) {
             $id = $_POST['id'];
+
+            $usuarioNom = $conn->query("SELECT usuario FROM usuarios WHERE id = $id");
+            $usuarioNom = $usuarioNom->fetch_assoc();
+            $usuarioNom = $usuarioNom['usuario'];
+
             $stmt = $conn->prepare("DELETE FROM usuarios WHERE id = ?");
-            if (!$stmt) {
-                throw new Exception("Error en la preparación de la consulta: " . $conn->error);
-            }
             $stmt->bind_param('i', $id);
-            if (!$stmt->execute()) {
-                throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
-            }
+            $stmt->execute();
             $mensaje = "Usuario eliminado con éxito!";
             $stmt->close();
+
+            // Registrar log de eliminación de usuario
+            registrar_log($conn, $_SESSION['usuario'], 'Eliminación de usuario', "Usuario '$usuarioNom' eliminado.");
+
+            // Redirigir para evitar reenvío de formulario
+            header('Location: adminUsuarios.php');
+            exit;
         }
     }
     // Obtener todos los usuarios
@@ -62,8 +83,9 @@ try {
     <header>
         <nav>
             <ul>
-                <li><a href="adminUsuarios.php" id="admin-link">Usuarios</a></li>
-                <li><a href="adminArch.php">Archivos</a></li>
+                <li><a href="adminArch.php">Documentos</a></li>
+                <li><a href="adminUsuarios.php">Usuarios</a></li>
+                <li><a href="logs.php">Registros</a></li>
                 <li><a href="logout.php">Cerrar Sesión</a></li>
             </ul>
         </nav>
@@ -76,12 +98,8 @@ try {
     <?php if ($mensaje): ?>
         <script>alert('<?= $mensaje ?>');</script>
     <?php endif; ?>
-    <div class="subtitulo">
-            <h1>
-                <span>Usuarios existentes</span>
-            </h1>
-        <button class="logout"><a href="adminArch.php">Volver</a></button>
-        <a href="logout.php"><span class="material-symbols-outlined">logout</span></a>
+    <div class="logoutregresar">
+        <button href="logout.php"><span class="material-symbols-outlined" style="display: block;">logout</span></button>
     </div>
     <div class="separador">
         <div class="contenedorreg">

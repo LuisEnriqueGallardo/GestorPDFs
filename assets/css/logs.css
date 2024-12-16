@@ -143,3 +143,14 @@ nav ul.forward a:hover:before{
     transform: scaleX(1);
     transform-origin: left;
 }
+
+.findocs {
+    background: #362772;
+    width: 80%;
+    border-radius: 85px;
+    box-shadow: 15px 15px 40px rgba(0,0,0,1);
+    overflow: hidden;
+    color: white;
+    padding: 7px;
+    text-align: center;
+}

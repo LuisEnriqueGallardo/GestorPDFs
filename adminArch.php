@@ -1,19 +1,21 @@
 <?php
 session_start();
+include("basedatos.php");
 
 if (!isset($_SESSION['rol'])) {
     header('Location: login.php');
     exit;
 }
 
+
 $mensaje = '';
 try {
-    // Conexión a la base de datos
-    $conn = new mysqli('localhost', 'root', '', 'sistemapdf');
-    if ($conn->connect_error) {
-        throw new Exception("Error de conexión: " . $conn->connect_error);
+    function registrar_log($conn, $usuario, $accion, $descripcion) {
+        $stmt = $conn->prepare("INSERT INTO logs (usuario, accion, descripcion) VALUES (?, ?, ?)");
+        $stmt->bind_param('sss', $usuario, $accion, $descripcion);
+        $stmt->execute();
+        $stmt->close();
     }
-    
     
     // Manejo de carga y eliminación de archivos
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,7 +25,7 @@ try {
             $maxFileSize = 64 * 1024 * 1024;
         
             if (count($archivos['name']) > 5) {
-                $mensajes[] = 'No puedes subir más de 10 archivos a la vez.';
+                $mensajes[] = 'No puedes subir más de 5 archivos a la vez.';
             } else {
                 for ($i = 0; $i < count($archivos['name']); $i++) {
                     if ($archivos['size'][$i] > $maxFileSize) {
@@ -41,17 +43,35 @@ try {
                     $stmt->execute();
                     $stmt->close();
                     $mensajes[] = "Archivo $nombre cargado con éxito!";
+                    
+                    // Registrar log de subida de archivo
+                    registrar_log($conn, $usuario, 'Subida de archivo', "Archivo '$nombre' subido.");
+
+                    // Redirigir para evitar reenvío de formulario
+                    header('Location: adminArch.php');
+                    exit;
                 }
             }
         } elseif (isset($_POST['eliminar'])) {
             if (isset($_POST['ids'])) {
                 $ids = $_POST['ids'];
                 foreach ($ids as $id) {
+                    $nombrearc = $conn->query("SELECT nomArchivo FROM archivos WHERE id = $id");
+                    $nombrearc = $nombre->fetch_assoc();
+                    $nombrearc = $nombre['nomArchivo'];
+
                     $stmt = $conn->prepare("DELETE FROM archivos WHERE id = ?");
                     $stmt->bind_param('i', $id);
                     $stmt->execute();
                     $stmt->close();
                     $mensajes[] = "Archivo eliminado con éxito!";
+
+                    // Registrar log de eliminación de archivo
+                    registrar_log($conn, $usuario, 'Eliminación de archivo', "Archivo '$nombrearc' eliminado.");
+
+                    // Redirigir para evitar reenvío de formulario
+                    header('Location: adminArch.php');
+                    exit;
                 } 
             } else {
                 $mensajes[] = "No se ha seleccionado ningún archivo para eliminar.";
@@ -61,12 +81,23 @@ try {
                 throw new Exception("No se ha especificado un ID de archivo a eliminar.");
             }
             $id = $_POST['id'];
+
+            $nombrearci = $conn->query("SELECT nomArchivo FROM archivos WHERE id = $id");
+            $nombrearci = $nombre->fetch_assoc();
+            $nombrearci = $nombre['nomArchivo'];
+            
             $stmt = $conn->prepare("DELETE FROM archivos WHERE id = ?");
             $stmt->bind_param('i', $id);
             $stmt->execute();
             $stmt->close();
             $mensajes[] = "Archivo eliminado con éxito!";
 
+            // Registrar log de eliminación de archivo
+            registrar_log($conn, $usuario, 'Eliminación de archivo', "Archivo '$nombrearci' eliminado.");
+
+            // Redirigir para evitar reenvío de formulario
+            header('Location: adminArch.php');
+            exit;
         }
     }
     
@@ -113,8 +144,9 @@ try {
     <header>
         <nav>
             <ul>
-                <li><a href="adminUsuarios.php" id="admin-link">Usuarios</a></li>
-                <li><a href="adminArch.php">Archivos</a></li>
+                <li><a href="adminArch.php">Documentos</a></li>
+                <li><a href="adminUsuarios.php">Usuarios</a></li>
+                <li><a href="logs.php">Registros</a></li>
                 <li><a href="logout.php">Cerrar Sesión</a></li>
             </ul>
         </nav>
@@ -186,7 +218,3 @@ try {
 </script>
 <script src="assets/js/adminArch.js"></script>
 </html>
-
-TODO Corregir ordenamiento de archivos por fecha y nombre
-TODO Insertar logs de actividad en la base de datos
-TODO Crear página de visualización de logs

@@ -1,31 +1,37 @@
 <?php
 session_start();
-
+include("basedatos.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = $_POST['usuario'];
     $contraseña = $_POST['contrasenia'];
 
-    // Conexión a la base de datos
-    $conn = new mysqli('localhost', 'root', '', 'sistemapdf');
-    if ($conn->connect_error) {
-        die("Error de conexión: " . $conn->connect_error);
+
+    function registrar_log($conn, $usuario, $accion, $descripcion) {
+        $stmt = $conn->prepare("INSERT INTO logs (usuario, accion, descripcion) VALUES (?, ?, ?)");
+        $stmt->bind_param('sss', $usuario, $accion, $descripcion);
+        $stmt->execute();
+        $stmt->close();
     }
 
-    $sql = "SELECT id, usuario, es_admin FROM usuarios WHERE usuario = ? AND contrasenia = ?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT id, usuario, es_admin FROM usuarios WHERE usuario = ? AND contrasenia = ?");
     $stmt->bind_param('ss', $usuario, $contraseña);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    
     if ($result->num_rows === 1) {
+        // Registrar log de inicio de sesión
+        registrar_log($conn, $usuario, 'Inicio de sesión', 'Inicio de sesión exitoso.');
+
         $user = $result->fetch_assoc();
-        session_start();
         $_SESSION['usuario'] = $user['nombre'];
         $_SESSION['rol'] = $user['es_admin'];
         header('Location: adminArch.php');
     } else {
-        echo 'Credenciales incorrectas';
+        // Registrar log de inicio de sesión fallido
+        registrar_log($conn, $usuario, 'Inicio de sesión', 'Inicio de sesión fallido.');
+        echo "<script>alert('Usuario o contraseña incorrectos.');</script>";
     }
 
     $stmt->close();
