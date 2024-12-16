@@ -31,7 +31,7 @@ h1 em {
 }
 
 body {
-    background: #787879;
+    background: #f6f5fa;
 }
 
 nav {
@@ -128,10 +128,10 @@ nav ul.forward a:hover:before{
     background: #fff;
     padding: 20px 15px;
     border-radius: 25px;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-top: -1%;
+    margin-bottom: 1%;
     box-shadow: 0 15px 10px rgba(0,0,0,0.2);
 }
 
@@ -172,7 +172,7 @@ table {
 }
 
 th {
-    background: #520909;
+    background: #4e38a4;
     color: #fff;
     font-size: 20px;
 }
@@ -275,7 +275,7 @@ footer {
     display: block;
     margin: 20px auto; /* Centra el botón horizontalmente */
     padding: 10px 20px;
-    background-color: #ff4b5c;
+    background-color: #4e38a4;
     color: white;
     border: none;
     border-radius: 5px;
@@ -286,7 +286,8 @@ footer {
 }
 
 .eliminar-todos:hover {
-    background-color: #ff1c2e;
+    transition: background-color 1.5s ease;
+    background-color: #8343b0;
 }
 
 .logout {
@@ -363,13 +364,13 @@ footer {
 
 .nuevoar {
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 6px auto;
-    width: 33%;
+    width: 45%;
     padding: 4px;
     box-shadow: 0 10px 10px rgba(0,0,0,0.2);
 }

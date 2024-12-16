@@ -114,6 +114,7 @@ try {
         <nav>
             <ul>
                 <li><a href="adminUsuarios.php" id="admin-link">Usuarios</a></li>
+                <li><a href="adminArch.php">Archivos</a></li>
                 <li><a href="logout.php">Cerrar Sesión</a></li>
             </ul>
         </nav>
@@ -151,7 +152,7 @@ try {
             </thead>
             <tbody id="cuerpoTabla">
             <?php foreach ($row as $archivo): ?>
-                    <tr id="row-<?= $archivo['id'] ?>" style="display:inline;">
+                    <tr id="row-<?= $archivo['id'] ?>">
                         <td class="check"><input type="checkbox" name="ids[]" value="<?= $archivo['id'] ?>"></td>
                         <td class="botonesfile">
                             <a class="verbtn" href="verArchivo.php?id=<?= $archivo['id']; ?>"><i class="material-icons">import_contacts</i></a>
