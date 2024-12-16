@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    
-
     if (botonexpandir && camposexpandibles) {
         botonexpandir.addEventListener('click', () => {
             if (camposexpandibles.classList.contains('hidden')) {

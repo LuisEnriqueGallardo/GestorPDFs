@@ -6,14 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = $_POST['usuario'];
     $contraseña = $_POST['contrasenia'];
 
-
-    function registrar_log($conn, $usuario, $accion, $descripcion) {
-        $stmt = $conn->prepare("INSERT INTO logs (usuario, accion, descripcion) VALUES (?, ?, ?)");
-        $stmt->bind_param('sss', $usuario, $accion, $descripcion);
-        $stmt->execute();
-        $stmt->close();
-    }
-
     $stmt = $conn->prepare("SELECT id, usuario, es_admin FROM usuarios WHERE usuario = ? AND contrasenia = ?");
     $stmt->bind_param('ss', $usuario, $contraseña);
     $stmt->execute();
@@ -25,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         registrar_log($conn, $usuario, 'Inicio de sesión', 'Inicio de sesión exitoso.');
 
         $user = $result->fetch_assoc();
-        $_SESSION['usuario'] = $user['nombre'];
+        $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['rol'] = $user['es_admin'];
         header('Location: adminArch.php');
     } else {

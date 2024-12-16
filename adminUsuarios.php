@@ -10,12 +10,6 @@ if (!isset($_SESSION['rol'])) {
 $mensaje = '';
 
 try {
-    function registrar_log($conn, $usuario, $accion, $descripcion) {
-        $stmt = $conn->prepare("INSERT INTO logs (usuario, accion, descripcion) VALUES (?, ?, ?)");
-        $stmt->bind_param('sss', $usuario, $accion, $descripcion);
-        $stmt->execute();
-        $stmt->close();
-    }
 
     // Manejo de creación y eliminación de usuarios
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -27,8 +21,8 @@ try {
             $stmt = $conn->prepare("INSERT INTO usuarios (usuario, contrasenia, es_admin) VALUES (?, ?, ?)");
             $stmt->bind_param('ssi', $usuario, $contrasenia, $rol);
             $stmt->execute();
-            $mensaje = "Usuario creado con éxito!";
             $stmt->close();
+            echo "<script>alert('Usuario creado con éxito!');</script>";
 
             // Registrar log de creación de usuario
             registrar_log($conn, $_SESSION['usuario'], 'Creación de usuario', "Usuario '$usuario' creado.");
@@ -41,17 +35,21 @@ try {
             $id = $_POST['id'];
 
             $usuarioNom = $conn->query("SELECT usuario FROM usuarios WHERE id = $id");
-            $usuarioNom = $usuarioNom->fetch_assoc();
-            $usuarioNom = $usuarioNom['usuario'];
+            $resultado = $usuarioNom->fetch_assoc();
+            $nombreUsuario = $resultado['usuario'];
 
+            if ($nombreUsuario === $_SESSION['usuario']) {
+                echo "<script>alert('No puedes eliminar tu propio usuario.'); window.location.href='adminUsuarios.php';</script>";
+                exit;
+            }
             $stmt = $conn->prepare("DELETE FROM usuarios WHERE id = ?");
             $stmt->bind_param('i', $id);
             $stmt->execute();
-            $mensaje = "Usuario eliminado con éxito!";
             $stmt->close();
+            echo "<script>alert('Usuario eliminado con éxito!');</script>";
 
             // Registrar log de eliminación de usuario
-            registrar_log($conn, $_SESSION['usuario'], 'Eliminación de usuario', "Usuario '$usuarioNom' eliminado.");
+            registrar_log($conn, $_SESSION['usuario'], 'Eliminación de usuario', "Usuario '$nombreUsuario' eliminado.");
 
             // Redirigir para evitar reenvío de formulario
             header('Location: adminUsuarios.php');
@@ -66,7 +64,7 @@ try {
 
 } catch (Exception $e) {
     $error_message = $e->getMessage();
-    echo "<script>console.error('HOLA ERROR 1: " . $error_message . "');</script>";
+    echo "<script>alert('ERROR: " . $error_message . "');</script>";
 } 
 ?>
 <!DOCTYPE html>
@@ -95,9 +93,6 @@ try {
             <span>Gestióna los usuarios desde este apartado.</span>
         </h1>
     </div>
-    <?php if ($mensaje): ?>
-        <script>alert('<?= $mensaje ?>');</script>
-    <?php endif; ?>
     <div class="logoutregresar">
         <button href="logout.php"><span class="material-symbols-outlined" style="display: block;">logout</span></button>
     </div>
