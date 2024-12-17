@@ -30,28 +30,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="assets/css/login.css">
-</head>
-<body>
-    <div class="caja-login">
-        <h2>Iniciar Sesión</h2>
-        <form method="POST" action="login.php">
-            <div class="recuadro">
-                <input type="text" name="usuario" required>
-                <label>Usuario</label>
-            </div>
-            <div class="recuadro">
-                <input type="password" name="contrasenia" required>
-                <label>Contraseña</label>
-            </div>
-            <button type="submit">Ingresar</button>
-        </form>
-    </div>
-</body>
-</html>

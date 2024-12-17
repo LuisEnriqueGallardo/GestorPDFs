@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
         header('Content-Transfer-Encoding: binary');
         header('Accept-Ranges: bytes');
         echo $archivo;
-        registrar_log($conn, $_SESSION['usuario'], 'Lectura de documento', ['descripcion' => 'Leyendo... ' . $nomArchivo]);
+        registrar_log($conn, $_SESSION['usuario'], 'Lectura de documento', 'Leyendo... ' . $nomArchivo);
     } else {
         echo "El archivo no existe. ID recibida: " . $id;
     }

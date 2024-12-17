@@ -3,7 +3,7 @@ session_start();
 include("basedatos.php");
 
 if (!isset($_SESSION['rol'])) {
-    header('Location: login.php');
+    header('Location: index.html');
     exit;
 }
 
@@ -92,9 +92,6 @@ try {
         <h1>Usuarios
             <span>Gestióna los usuarios desde este apartado.</span>
         </h1>
-    </div>
-    <div class="logoutregresar">
-        <button href="logout.php"><span class="material-symbols-outlined" style="display: block;">logout</span></button>
     </div>
     <div class="separador">
         <div class="contenedorreg">

@@ -3,7 +3,7 @@ session_start();
 include("basedatos.php");
 
 if (!isset($_SESSION['rol'])) {
-    header('Location: login.php');
+    header('Location: index.html');
     exit;
 }
 
